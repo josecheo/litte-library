@@ -85,7 +85,7 @@ export default function CardBook(props) {
     </Widget>
 
     {isOpen && (
-            <Dialog  aria-labelledby="customized-dialog-title" open={isOpen}>
+            <Dialog aria-labelledby="customized-dialog-title" open={isOpen}>
               <DialogCustom 
               data={props}
               onclose={()=>setIsOpen(false)}

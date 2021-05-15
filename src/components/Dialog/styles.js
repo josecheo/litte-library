@@ -1,17 +1,19 @@
 import { makeStyles } from "@material-ui/styles";
 
 export default makeStyles(theme => ({
-  dialogWrapper: {
-    display: "flex",
-    width:'400px',
-    minHeight: "300px",
-  },
+
   logotypeContainer: {
-    width:'auto',
-    height:'100%'
+    backgroundColor:'gray',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '280px',
+    borderRadius:'8px',
+
+
   },
   logotypeImage: {
-    width: '100%',
-    height: 'auto'
+    maxHeight: '280px',
+    overflow: 'hidden'
   },
 }));
