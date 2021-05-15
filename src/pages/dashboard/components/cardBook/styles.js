@@ -29,6 +29,14 @@ export default makeStyles(theme => ({
   statCell: {
     padding: theme.spacing(2),
   },
+
+  buttonRow: {
+    display:'flex',
+    marginTop:'20px',
+    alignItems: 'flex-start',
+    justifyContent:'flex-end',
+  },
+
   totalValueContainer: {
     display: "flex",
     alignItems: "flex-end",

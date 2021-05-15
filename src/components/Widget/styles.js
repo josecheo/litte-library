@@ -4,7 +4,6 @@ export default makeStyles(theme => ({
   widgetWrapper: {
     display: "flex",
     minHeight: "100%",
-    cursor:'pointer',
     "&:hover": {
       transform: 'scale(1.02)'
     },

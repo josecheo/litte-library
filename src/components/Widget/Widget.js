@@ -26,20 +26,15 @@ export default function Widget({
   headerClass,
   style,
   noWidgetShadow,
-  setIsOpen,
+  
   ...props
 }) {
   var classes = useStyles();
-
   // local
-
   
-const handleOpenEditDialog = () => {
-
-}
-
   return (
-    <div onClick={()=>setIsOpen(true)} className={classes.widgetWrapper} style={style && {...style}}>
+    <>
+    <div className={classes.widgetWrapper} style={style && {...style}}>
       <Paper className={classes.paper} classes={{ root: classnames(classes.widgetRoot, {
         [classes.noWidgetShadow]: noWidgetShadow
         }) }}>
@@ -47,27 +42,7 @@ const handleOpenEditDialog = () => {
           [classes.noPadding]: noHeaderPadding,
           [headerClass]: headerClass
         })}>
-          {header ? (
-            header
-          ) : (
-            <React.Fragment>
-              <Typography variant="h5" color="textSecondary" noWrap>
-                {title}
-              </Typography>
-              {!disableWidgetMenu && (
-                <IconButton
-                  color="primary"
-                  classes={{ root: classes.moreButton }}
-                  aria-owns="widget-menu"
-                  aria-haspopup="true"
-                
-                  // buttonRef={setMoreButtonRef}
-                >
-                  <MoreIcon />
-                </IconButton>
-              )}
-            </React.Fragment>
-          )}
+          {header}
         </div>
         <div
           className={classnames(classes.widgetBody, {
@@ -78,10 +53,7 @@ const handleOpenEditDialog = () => {
           {children}
         </div>
       </Paper>
- 
-
-
-
     </div>
+    </>
   );
 }

@@ -119,96 +119,17 @@ export default function DialogCustom(props) {
   return (
     <>
       <DialogTitle id="customized-dialog-title" onClose={() => onclose()}>
-        Editar Libro
+        Elimiar Libro
         </DialogTitle>
       <DialogContent>
-        <Grid container spacing={1}>
-          <Grid item xs={6}>
-            <TextField
-              margin="dense"
-              id="title"
-              name='title'
-              label="Titulo"
-              type="text"
-              variant="outlined"
-              fullWidth
-              value={form.title}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              id="copies"
-              name='copies'
-              label="Ejemplares"
-              type="text"
-              variant="outlined"
-              fullWidth
-              onKeyPress={(e) => onlyNumber(e)}
-              value={form.copies}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              name='publication'
-              id="publication"
-              label="Año de Publicación"
-              type="text"
-              onKeyPress={(e) => onlyNumber(e)}
-              variant="outlined"
-              fullWidth
-              value={form.publication}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              id="author"
-              name='author'
-              label="Autor"
-              type="text"
-              variant="outlined"
-              fullWidth
-              value={form.author}
-              onChange={handleInputChange}
-            />
-            <TextField
-              margin="dense"
-              id="edition"
-              name='edition'
-              label="Edición N°"
-              type="text"
-              variant="outlined"
-              fullWidth
-              onKeyPress={(e) => onlyNumber(e)}
-              value={form.edition}
-              onChange={handleInputChange}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            {form.imagenUrl !== '' && (
-              <>
-                <div className={classes.logotypeContainer}>
-                  <img src={form.imagenUrl} alt="logo" className={classes.logotypeImage} />
-                </div>
-              </>
-            )}
-            <DialogActions>
-              <Button onClick={(e) => handleFileClick(e, 'file')} color="primary">
-                Subir Imagen
-          </Button>
-              <input type="file" accept="image/png,image/jpeg" ref={fileRefs.file} name="filename" style={{ display: 'none' }}
-                multiple="multiple"
-                onChange={(e) => handleFileChange(e)}
-              />
-            </DialogActions>
-          </Grid>
-        </Grid>
-      </DialogContent>
+        ¿Esta seguro que desea eliminar este Libro?
+       </DialogContent>
       <DialogActions>
         <Button onClick={() => { }} color="primary">
-          Guardar
+          Si, seguro
           </Button>
         <Button onClick={() => onclose()} color="secondary">
-          Cancelar
+          No, olvidalo
           </Button>
       </DialogActions>
     </>
