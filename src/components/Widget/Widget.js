@@ -6,6 +6,9 @@ import {
   MenuItem,
   Typography,
 } from "@material-ui/core";
+
+
+
 import { MoreVert as MoreIcon } from "@material-ui/icons";
 import classnames from "classnames";
 
@@ -23,16 +26,20 @@ export default function Widget({
   headerClass,
   style,
   noWidgetShadow,
+  setIsOpen,
   ...props
 }) {
   var classes = useStyles();
 
   // local
-  var [moreButtonRef, setMoreButtonRef] = useState(null);
-  var [isMoreMenuOpen, setMoreMenuOpen] = useState(false);
+
+  
+const handleOpenEditDialog = () => {
+
+}
 
   return (
-    <div className={classes.widgetWrapper} style={style && {...style}}>
+    <div onClick={()=>setIsOpen(true)} className={classes.widgetWrapper} style={style && {...style}}>
       <Paper className={classes.paper} classes={{ root: classnames(classes.widgetRoot, {
         [classes.noWidgetShadow]: noWidgetShadow
         }) }}>
@@ -53,8 +60,8 @@ export default function Widget({
                   classes={{ root: classes.moreButton }}
                   aria-owns="widget-menu"
                   aria-haspopup="true"
-                  onClick={() => setMoreMenuOpen(true)}
-                  buttonRef={setMoreButtonRef}
+                
+                  // buttonRef={setMoreButtonRef}
                 >
                   <MoreIcon />
                 </IconButton>
@@ -71,26 +78,10 @@ export default function Widget({
           {children}
         </div>
       </Paper>
-      <Menu
-        id="widget-menu"
-        open={isMoreMenuOpen}
-        anchorEl={moreButtonRef}
-        onClose={() => setMoreMenuOpen(false)}
-        disableAutoFocusItem
-      >
-        <MenuItem>
-          <Typography>Edit</Typography>
-        </MenuItem>
-        <MenuItem>
-          <Typography>Copy</Typography>
-        </MenuItem>
-        <MenuItem>
-          <Typography>Delete</Typography>
-        </MenuItem>
-        <MenuItem>
-          <Typography>Print</Typography>
-        </MenuItem>
-      </Menu>
+ 
+
+
+
     </div>
   );
 }

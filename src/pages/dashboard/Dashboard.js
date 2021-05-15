@@ -5,11 +5,11 @@ import {
 import {
   Search as SearchIcon,
 } from "@material-ui/icons";
-import BigStat from "./components/cardBook/cardBook";
+import CardBook from "./components/cardBook/cardBook";
 import useBookSearch from "./components/useBookSearch";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress/CircularProgress';
 import TextField from '@material-ui/core/TextField';
-import { Typography } from "../../components/Wrappers";
+import { Typography } from "../../components/Wrappers/Wrappers";
 
 
 
@@ -79,13 +79,13 @@ export default function Dashboard() {
           if (books.length === index + 1) {
             return <Grid item md={4} sm={6} xs={12} key={index}>
               <div ref={lastBookElementRef} key={index}>
-                <BigStat {...item} />
+                <CardBook {...item} />
               </div>
             </Grid>
           } else {
             return <Grid item md={4} sm={6} xs={12} key={index}>
               <div key={index}>
-                <BigStat {...item} />
+                <CardBook {...item} />
               </div>
             </Grid>
           }

@@ -4,6 +4,12 @@ export default makeStyles(theme => ({
   widgetWrapper: {
     display: "flex",
     minHeight: "100%",
+    cursor:'pointer',
+    "&:hover": {
+      transform: 'scale(1.02)'
+    },
+    transition: 'transform .2s;'
+
   },
   widgetHeader: {
     padding: theme.spacing(3),

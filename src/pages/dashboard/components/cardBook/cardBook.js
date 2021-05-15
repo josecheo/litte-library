@@ -11,17 +11,21 @@ import useStyles from "./styles";
 // components
 import Widget from "../../../../components/Widget/Widget";
 import { Typography } from "../../../../components/Wrappers/Wrappers";
+import Dialog from '@material-ui/core/Dialog';
+import DialogCustom from '../../../../components/Dialog/DialogCustom'
 
-export default function BigStat(props) {
+
+export default function CardBook(props) {
   var { title, copies, publication,author,edition,imagenUrl } = props;
   var classes = useStyles();
   var theme = useTheme();
 
   // local
-  var [value, setValue] = useState("daily");
-
+  const [isOpen, setIsOpen] = useState(false);
   return (
+    <>
     <Widget
+    setIsOpen={setIsOpen}
       header={
         <div className={classes.title}>
           <Typography variant="h5">{title}</Typography>
@@ -79,13 +83,17 @@ export default function BigStat(props) {
         </div>
       </div>
     </Widget>
+
+    {isOpen && (
+            <Dialog  aria-labelledby="customized-dialog-title" open={isOpen}>
+              <DialogCustom 
+              data={props}
+              onclose={()=>setIsOpen(false)}
+              />
+          </Dialog>
+     )}
+
+
+    </>
   );
-}
-
-// #######################################################################
-
-function getRandomData() {
-  return Array(7)
-    .fill()
-    .map(() => ({ value: Math.floor(Math.random() * 10) + 1 }));
 }
