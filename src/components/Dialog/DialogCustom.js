@@ -1,35 +1,30 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
 import MuiDialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
-import classnames from "classnames";
 import TextField from '@material-ui/core/TextField';
 import { DialogContent } from '@material-ui/core';
-
-
-
-// styles
+import { BookServices } from '../../services/book-service'
 import useStyles from "./styles";
 import { Grid } from "@material-ui/core";
+import Dialog from '@material-ui/core/Dialog';
+
 
 export default function DialogCustom(props) {
-  const { data, onclose } = props;
-  var classes = useStyles();
-  const fileRefs = {
-    file: useRef(null),
-  };
+  const { data, onclose,setParm } = props
+  var classes = useStyles()
+  const fileRefs = { file: useRef(null) }
+  const bookServices = BookServices.getInstance()
   const [form, setform] = useState(data)
+  const [susscess, setSusscess] = useState(false)
+
   const handleFileClick = () => {
     fileRefs.file.current.click();
-  };
-
-
+  }
   const styles = (theme) => ({
     root: {
       margin: 0,
@@ -42,12 +37,9 @@ export default function DialogCustom(props) {
       color: theme.palette.grey[500],
     },
   });
-
-  // Subir archivo
   async function uploadImageCallBack(img) {
     var axios = require('axios');
     var FormData = require('form-data');
-    var fs = require('fs');
     var data = new FormData();
     data.append('image', img);
 
@@ -76,24 +68,35 @@ export default function DialogCustom(props) {
 
 
   }
-
-
   const handleFileChange = (e) => {
     const file = fileRefs.file.current.files;
     if (file) {
       uploadImageCallBack(file[0])
     }
-  };
-  function handleInputChange(e) {
+  }
+  const handleInputChange = (e) => {
     const { name, value } = e.target
     setform({ ...form, [name]: value })
   }
-
-  function onlyNumber(e) {
+  const onlyNumber = (e) => {
     const key = window.event ? e.which : e.keyCode;
     if (key < 48 || key > 57) {
       e.preventDefault();
     }
+  }
+
+  const handleSubmit = () => {
+    bookServices.updateBook(form).subscribe((data) => {
+      setSusscess(true)
+
+      setTimeout(() => {
+        setSusscess(false)
+        setParm()
+        onclose()
+      }, 2000);
+    },
+      (error) => console.log(error)
+    );
   }
 
   const DialogTitle = withStyles(styles)((props) => {
@@ -118,6 +121,7 @@ export default function DialogCustom(props) {
 
   return (
     <>
+  
       <DialogTitle id="customized-dialog-title" onClose={() => onclose()}>
         Editar Libro
         </DialogTitle>
@@ -204,13 +208,23 @@ export default function DialogCustom(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => { }} color="primary">
+        <Button onClick={() => handleSubmit()} color="primary">
           Guardar
           </Button>
         <Button onClick={() => onclose()} color="secondary">
           Cancelar
           </Button>
       </DialogActions>
+
+
+      {susscess && (
+        <Dialog aria-labelledby="customized-dialog-title" open={susscess}>
+          <div style={{ width: '200px', height: '80px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <Typography variant="h6">Ok!</Typography>
+          </div>
+        </Dialog>
+
+      )}
     </>
   );
 }

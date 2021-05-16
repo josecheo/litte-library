@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
-export default function useBookSearch(parm) {
+export default function useBookSearch(parm,reload) {
   const { title, publication, pageNumber } = parm
+  
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
   const [books, setBooks] = useState([])
@@ -10,9 +11,10 @@ export default function useBookSearch(parm) {
 
   useEffect(() => {
     setBooks([])
-  }, [title, publication])
+  }, [title, publication,reload])
 
   useEffect(() => {
+ 
     setLoading(true)
     setError(false)
     let cancel
@@ -24,8 +26,9 @@ export default function useBookSearch(parm) {
     }).then(res => {
       setBooks(prevBooks => {
         return [...new Set([...prevBooks, ...res.data.map(b => {
-          const {title,author,publication,edition,copies,imagenUrl} =b
+          const {title,author,publication,edition,copies,imagenUrl,bookId} =b
           return {
+            bookId,
             title,
             author,
             publication,
@@ -43,7 +46,7 @@ export default function useBookSearch(parm) {
       setError(true)
     })
     return () => cancel()
-  }, [title, publication,pageNumber])
+  }, [title, publication,pageNumber,reload])
 
   return { loading, error, books, hasMore }
 }

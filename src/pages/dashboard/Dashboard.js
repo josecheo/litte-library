@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import {
   Grid,
   Button
@@ -14,25 +14,24 @@ import { Typography } from "../../components/Wrappers/Wrappers";
 import Dialog from '@material-ui/core/Dialog';
 import DialogCustom from '../../components/Dialog/DialogCustom'
 
-
-
 export default function Dashboard() {
   const [parm, setParm] = useState({
     title: '',
     publication: '',
     pageNumber: 1,
   })
-
-  const [data, setData] = useState(
-    { title: '', copies: '', publication: '', author: '', edition: '', imagenUrl: '' }
-  )
+  const [reload, setReload] = useState(false)
   const {
     books,
     hasMore,
     loading,
-  } = useBookSearch(parm)
+  } = useBookSearch(parm, reload)
+
+
   const [isOpenNewBook, setIsOpenNewBook] = useState(false)
-  const observer = useRef()
+  const observer: any = useRef()
+
+
   const lastBookElementRef = useCallback(node => {
     if (loading) return
     if (observer.current) observer.current.disconnect()
@@ -42,6 +41,7 @@ export default function Dashboard() {
       }
     })
     if (node) observer.current.observe(node)
+    // eslint-disable-next-line
   }, [loading, hasMore])
 
   function handleSearch(e) {
@@ -54,7 +54,6 @@ export default function Dashboard() {
       e.preventDefault();
     }
   }
-
   return (
     <>
       <Grid container spacing={3} alignItems="flex-end">
@@ -90,13 +89,31 @@ export default function Dashboard() {
           if (books.length === index + 1) {
             return <Grid item md={4} sm={6} xs={12} key={index}>
               <div ref={lastBookElementRef} key={index}>
-                <CardBook {...item} />
+                <CardBook
+                  setParm={() => {
+                    setReload(!reload)
+                    setParm({
+                      title: '',
+                      publication: '',
+                      pageNumber: 1,
+                    })
+                  }}
+                  {...item} />
               </div>
             </Grid>
           } else {
             return <Grid item md={4} sm={6} xs={12} key={index}>
               <div key={index}>
-                <CardBook {...item} />
+                <CardBook
+                  setParm={() => {
+                    setReload(!reload)
+                    setParm({
+                      title: '',
+                      publication: '',
+                      pageNumber: 1,
+                    })
+                  }}
+                  {...item} />
               </div>
             </Grid>
           }
@@ -115,16 +132,22 @@ export default function Dashboard() {
         </div>
       )}
       {!loading && !books.length && (
-        <Typography variant="h6" weight="medium">
+        <Typography variant="h6" weight="medium" size colorBrightness color>
           No existen Libros
         </Typography>
       )}
-
-
       {isOpenNewBook && (
         <Dialog aria-labelledby="customized-dialog-title" open={isOpenNewBook}>
           <DialogCustom
-            data={data}
+            data={[]}
+            setParm={() => {
+              setReload(!reload)
+              setParm({
+                title: '',
+                publication: '',
+                pageNumber: 1,
+              })
+            }}
             onclose={() => setIsOpenNewBook(false)}
           />
         </Dialog>

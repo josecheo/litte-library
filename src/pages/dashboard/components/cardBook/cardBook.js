@@ -1,14 +1,8 @@
-import React, { useState } from "react";
-import { Grid, Select, MenuItem, Input, Button } from "@material-ui/core";
+import { useState } from "react";
+import { Grid, Button } from "@material-ui/core";
 import { ArrowForward as ArrowForwardIcon } from "@material-ui/icons";
-import { useTheme } from "@material-ui/styles";
-import { BarChart, Bar } from "recharts";
 import classnames from "classnames";
-
-// styles
 import useStyles from "./styles";
-
-// components
 import Widget from "../../../../components/Widget/Widget";
 import { Typography } from "../../../../components/Wrappers/Wrappers";
 import Dialog from '@material-ui/core/Dialog';
@@ -17,16 +11,13 @@ import DialogCustomDelete from '../../../../components/Dialog/DialogCustomDelete
 
 
 export default function CardBook(props) {
-  var { title, copies, publication, author, edition, imagenUrl } = props;
+  var { title, copies, publication, author, edition, imagenUrl,setParm } = props;
   var classes = useStyles();
-
-
-  // local
   const [isOpen, setIsOpen] = useState(false);
-
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   return (
     <>
+ 
       <Widget
         header={
           <div className={classes.title}>
@@ -98,20 +89,20 @@ export default function CardBook(props) {
         <Dialog aria-labelledby="customized-dialog-title" open={isOpen}>
           <DialogCustom
             data={props}
+            setParm={setParm}
             onclose={() => setIsOpen(false)}
           />
         </Dialog>
       )}
-
       {isOpenDelete && (
         <Dialog aria-labelledby="customized-dialog-title" open={isOpenDelete}>
           <DialogCustomDelete
             data={props}
+            setParm={setParm}
             onclose={() => setIsOpenDelete(false)}
           />
         </Dialog>
       )}
-
     </>
   );
 }

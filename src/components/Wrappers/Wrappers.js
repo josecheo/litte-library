@@ -1,4 +1,3 @@
-import React from "react";
 import {
   withStyles,
   Badge as BadgeBase,
@@ -7,8 +6,6 @@ import {
 } from "@material-ui/core";
 import { useTheme, makeStyles } from "@material-ui/styles";
 import classnames from "classnames";
-
-// styles
 var useStyles = makeStyles(theme => ({
   badge: {
     fontWeight: 600,
@@ -16,6 +13,64 @@ var useStyles = makeStyles(theme => ({
     minWidth: 16,
   },
 }));
+
+
+function getColor(color, theme, brigtness = "main") {
+  if (color && theme.palette[color] && theme.palette[color][brigtness]) {
+    return theme.palette[color][brigtness];
+  }
+}
+
+function getFontWeight(style) {
+  switch (style) {
+    case "light":
+      return 300;
+    case "medium":
+      return 500;
+    case "bold":
+      return 600;
+    default:
+      return 400;
+  }
+}
+
+function getFontSize(size, variant = "", theme) {
+  var multiplier;
+
+  switch (size) {
+    case "sm":
+      multiplier = 0.8;
+      break;
+    case "md":
+      multiplier = 1.5;
+      break;
+    case "xl":
+      multiplier = 2;
+      break;
+    case "xxl":
+      multiplier = 3;
+      break;
+    default:
+      multiplier = 1;
+      break;
+  }
+
+  var defaultSize =
+    variant && theme.typography[variant]
+      ? theme.typography[variant].fontSize
+      : theme.typography.fontSize + "px";
+
+  return `calc(${defaultSize} * ${multiplier})`;
+}
+
+function createStyled(styles, options) {
+  var Styled = function(props) {
+    const { children, ...other } = props;
+    return children(other);
+  };
+
+  return withStyles(styles, options)(Styled);
+}
 
 function Badge({ children, colorBrightness, color, ...props }) {
   var classes = useStyles();
@@ -119,63 +174,4 @@ function Button({ children, color, className, ...props }) {
   );
 }
 
-export { Badge, Typography, Button };
-
-// ########################################################################
-
-function getColor(color, theme, brigtness = "main") {
-  if (color && theme.palette[color] && theme.palette[color][brigtness]) {
-    return theme.palette[color][brigtness];
-  }
-}
-
-function getFontWeight(style) {
-  switch (style) {
-    case "light":
-      return 300;
-    case "medium":
-      return 500;
-    case "bold":
-      return 600;
-    default:
-      return 400;
-  }
-}
-
-function getFontSize(size, variant = "", theme) {
-  var multiplier;
-
-  switch (size) {
-    case "sm":
-      multiplier = 0.8;
-      break;
-    case "md":
-      multiplier = 1.5;
-      break;
-    case "xl":
-      multiplier = 2;
-      break;
-    case "xxl":
-      multiplier = 3;
-      break;
-    default:
-      multiplier = 1;
-      break;
-  }
-
-  var defaultSize =
-    variant && theme.typography[variant]
-      ? theme.typography[variant].fontSize
-      : theme.typography.fontSize + "px";
-
-  return `calc(${defaultSize} * ${multiplier})`;
-}
-
-function createStyled(styles, options) {
-  var Styled = function(props) {
-    const { children, ...other } = props;
-    return children(other);
-  };
-
-  return withStyles(styles, options)(Styled);
-}
+export { Badge, Typography, Button }
