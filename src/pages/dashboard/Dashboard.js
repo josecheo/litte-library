@@ -46,7 +46,7 @@ export default function Dashboard() {
 
   function handleSearch(e) {
     const { name, value } = e.target
-    setParm({ ...parm, [name]: value })
+    setParm({ ...parm, [name]: value, pageNumber: 1 })
   }
   function onlyNumber(e) {
     const key = window.event ? e.which : e.keyCode;

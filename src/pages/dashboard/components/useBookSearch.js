@@ -18,24 +18,25 @@ export default function useBookSearch(parm) {
     let cancel
     axios({
       method: 'GET',
-      url: 'http://openlibrary.org/search.json',
-      params: { q: title, publication: publication, page: pageNumber },
+      url: 'http://localhost:4000/getAllBooks',
+      params: {title:title,publication:publication,num_page: pageNumber },
       cancelToken: new axios.CancelToken(c => cancel = c)
     }).then(res => {
       setBooks(prevBooks => {
-        return [...new Set([...prevBooks, ...res.data.docs.map(b => {
+        return [...new Set([...prevBooks, ...res.data.map(b => {
+          const {title,author,publication,edition,copies,imagenUrl} =b
           return {
-            title: b.title,
-            author: b.author_name ? b.author_name[0] : 'No hay autor registrado',
-            publication: b.first_publish_year,
-            edition: 2,
-            copies: Math.floor((Math.random() * (1 - 1000 + 1)) + 1000),
-            imagenUrl: 'https://estaeslalibreria.com/wp-content/uploads/2020/04/Resumen-de-1984-4.jpg',
+            title,
+            author,
+            publication,
+            edition,
+            copies,
+            imagenUrl,
           }
         }
         )])]
       })
-      setHasMore(res.data.docs.length > 0)
+      setHasMore(res.data.length > 0)
       setLoading(false)
     }).catch(e => {
       if (axios.isCancel(e)) return
