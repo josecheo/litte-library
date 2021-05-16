@@ -10,18 +10,25 @@ import DialogCustom from '../../../../components/Dialog/DialogCustom'
 import DialogCustomDelete from '../../../../components/Dialog/DialogCustomDelete'
 
 
-export default function CardBook(props) {
-  var { title, copies, publication, author, edition, imagenUrl,setParm } = props;
-  var classes = useStyles();
+export default function CardBook(props: { title: any; copies: any; publication: any; author: any; edition: any; imagenUrl: any; setParm: any; }) {
+  var { title, copies,  author, publication,edition, imagenUrl, setParm }:any = props;
+
+ 
+  var classes: any = useStyles();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenDelete, setIsOpenDelete] = useState(false);
   return (
     <>
- 
+
       <Widget
         header={
           <div className={classes.title}>
-            <Typography variant="h5">{title}</Typography>
+            <Typography
+              weight
+              size
+              color
+              colorBrightness
+              variant="h5">{title}</Typography>
           </div>
         }
         upperTitle
@@ -29,15 +36,23 @@ export default function CardBook(props) {
       >
         <div className={classes.totalValueContainer}>
           <div className={classes.totalValue}>
-            <Typography size="xxl" color="text" colorBrightness="secondary">
+            <Typography
+              size="xxl"
+              color="text"
+              colorBrightness="secondary"
+              weight
+            >
               {copies}
             </Typography>
             <ArrowForwardIcon
-              className={classnames(classes.profitArrow, {
-                [!publication]: classes.profitArrowDanger,
-              })}
+              className={classes.profitArrow}
             />
-            <Typography size="sm" color="text" colorBrightness="secondary">
+            <Typography
+              weight
+              size="sm"
+              color="text"
+              colorBrightness="secondary"
+            >
               Ejemplares
           </Typography>
           </div>
@@ -48,28 +63,49 @@ export default function CardBook(props) {
         <div className={classes.bottomStatsContainer}>
           <div className={classnames(classes.statCell, classes.borderRight)}>
             <Grid container alignItems="center">
-              <Typography variant="h6">{publication}</Typography>
+              <Typography
+                variant="h6"
+                weight
+                size="sm"
+                color="text"
+                colorBrightness="secondary"
+              >{publication}</Typography>
 
             </Grid>
-            <Typography size="sm" color="text" colorBrightness="secondary">
+            <Typography weight size="sm" color="text" colorBrightness="secondary">
               Publicado
           </Typography>
           </div>
           <div className={classes.statCell}>
             <Grid container alignItems="center">
-              <Typography variant="h6">{author}</Typography>
+              <Typography
+                weight
+                variant="h6"
+                size="sm"
+                color="text"
+                colorBrightness="secondary"
+              >{author}</Typography>
             </Grid>
-            <Typography size="sm" color="text" colorBrightness="secondary">
+            <Typography weight size="sm" color="text" colorBrightness="secondary">
               Autor
           </Typography>
           </div>
           <div className={classnames(classes.statCell, classes.borderRight)}>
             <Grid container alignItems="center">
-              <Typography variant="h6">
+              <Typography
+                weight
+                size
+                color
+                colorBrightness="secondary"
+                variant="h6">
                 {edition}
               </Typography>
             </Grid>
-            <Typography size="sm" color="text" colorBrightness="secondary">
+            <Typography
+              weight
+              size="sm"
+              color="text"
+              colorBrightness="secondary">
               Edición
           </Typography>
           </div>

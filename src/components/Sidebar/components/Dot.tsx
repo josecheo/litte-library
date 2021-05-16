@@ -3,7 +3,7 @@ import { makeStyles, useTheme } from "@material-ui/styles";
 import classnames from "classnames";
 
 // styles
-var useStyles = makeStyles(theme => ({
+var useStyles: any = makeStyles((theme: { palette: { text: { hint: any; }; }, transitions: { create: (arg0: string) => any; } }) => ({
   dotBase: {
     width: 8,
     height: 8,
@@ -21,9 +21,9 @@ var useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Dot({ size, color }) {
+export default function Dot({ size, color }:any) {
   var classes = useStyles();
-  var theme = useTheme();
+  var theme:any = useTheme();
 
   return (
     <div

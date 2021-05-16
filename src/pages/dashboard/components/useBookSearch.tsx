@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios, { Canceler } from 'axios'
 
-export default function useBookSearch(parm,reload) {
+export default function useBookSearch(parm: { title: any; publication: any; pageNumber: any },reload: boolean) {
   const { title, publication, pageNumber } = parm
   
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-  const [books, setBooks] = useState([])
-  const [hasMore, setHasMore] = useState(false)
+  const [loading, setLoading] = useState<any>(false)
+  const [error, setError] = useState<any>(false)
+  const [books, setBooks] = useState<any>([])
+  const [hasMore, setHasMore] = useState<any>(false)
 
   useEffect(() => {
     setBooks([])
@@ -17,16 +17,16 @@ export default function useBookSearch(parm,reload) {
  
     setLoading(true)
     setError(false)
-    let cancel
+    let cancel: Canceler
     axios({
       method: 'GET',
       url: 'https://littelibrary.herokuapp.com/getAllBooks',
       params: {title:title,publication:publication,num_page: pageNumber },
       cancelToken: new axios.CancelToken(c => cancel = c)
-    }).then(res => {
-      setBooks(prevBooks => {
-        return [...new Set([...prevBooks, ...res.data.map(b => {
-          const {title,author,publication,edition,copies,imagenUrl,bookId} =b
+    }).then((res):any => {
+      setBooks((prevBooks: any) => {
+        return [...new Set([...prevBooks, ...res.data.map((b: any) => {
+          const {title,author,publication,edition,copies,imagenUrl,bookId}:any =b
           return {
             bookId,
             title,

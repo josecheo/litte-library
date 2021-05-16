@@ -15,7 +15,7 @@ export default function Widget({
   headerClass,
   style,
   noWidgetShadow,
-}) {
+}:any) {
   var classes = useStyles();
   return (
     <>

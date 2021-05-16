@@ -33,7 +33,7 @@ export default function App() {
 
   // #######################################################################
 
-  function PrivateRoute({ component, ...rest }) {
+  function PrivateRoute({ component, ...rest }:any) {
     return (
       <Route
         {...rest}
@@ -55,7 +55,7 @@ export default function App() {
     );
   }
 
-  function PublicRoute({ component, ...rest }) {
+  function PublicRoute({ component, ...rest }:any) {
     return (
       <Route
         {...rest}

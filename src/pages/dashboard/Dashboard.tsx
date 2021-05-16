@@ -44,11 +44,11 @@ export default function Dashboard() {
     // eslint-disable-next-line
   }, [loading, hasMore])
 
-  function handleSearch(e) {
+  function handleSearch(e: { target: { name: any; value: any; }; }) {
     const { name, value } = e.target
     setParm({ ...parm, [name]: value, pageNumber: 1 })
   }
-  function onlyNumber(e) {
+  function onlyNumber(e: any) {
     const key = window.event ? e.which : e.keyCode;
     if (key < 48 || key > 57) {
       e.preventDefault();
@@ -85,7 +85,7 @@ export default function Dashboard() {
       </Grid>
       <br></br>
       <Grid container spacing={2}>
-        {books.map((item, index) => {
+        {books.map((item:any, index:any) => {
           if (books.length === index + 1) {
             return <Grid item md={4} sm={6} xs={12} key={index}>
               <div ref={lastBookElementRef} key={index}>

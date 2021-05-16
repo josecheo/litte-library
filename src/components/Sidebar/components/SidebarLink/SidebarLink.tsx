@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import {
   Collapse,
   Divider,
@@ -27,8 +27,8 @@ export default function SidebarLink({
   isSidebarOpened,
   nested,
   type,
-}) {
-  var classes = useStyles();
+}:any) {
+  var classes:any = useStyles();
 
   // local
   var [isOpen, setIsOpen] = useState(false);
@@ -151,7 +151,7 @@ export default function SidebarLink({
           className={classes.nestedList}
         >
           <List component="div" disablePadding>
-            {children.map(childrenLink => (
+            {children.map((childrenLink: string) => (
               <SidebarLink
                 key={childrenLink && childrenLink.link}
                 location={location}
@@ -169,7 +169,7 @@ export default function SidebarLink({
 
   // ###########################################################
 
-  function toggleCollapse(e) {
+  function toggleCollapse(e: { preventDefault: () => void; }) {
     if (isSidebarOpened) {
       e.preventDefault();
       setIsOpen(!isOpen);
