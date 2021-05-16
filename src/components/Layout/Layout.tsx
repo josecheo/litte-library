@@ -11,7 +11,7 @@ import Sidebar from "../Sidebar/Sidebar";
 import Dashboard from "../../pages/dashboard/Dashboard";
 import { useLayoutState } from "../../context/LayoutContext";
 
-function Layout(props) {
+function Layout(props: { history: any; }) {
   var classes = useStyles();
   var layoutState = useLayoutState();
   return (

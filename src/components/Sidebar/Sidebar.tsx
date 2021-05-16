@@ -20,9 +20,9 @@ const structure = [
   { id: 5, type: 'divider' },
 ];
 
-function Sidebar({ location }) {
-  var classes = useStyles();
-  var theme = useTheme();
+function Sidebar({ location }:any) {
+  var classes:any = useStyles();
+  var theme:any = useTheme();
   var { isSidebarOpened } = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
   var [isPermanent, setPermanent] = useState(true);
@@ -63,9 +63,15 @@ function Sidebar({ location }) {
       <List className={classes.sidebarList}>
         {structure.map(link => (
           <SidebarLink
-            key={link.id}
+            // key={link.id}
             location={location}
             isSidebarOpened={isSidebarOpened}
+            link={false}
+            label
+            nested={false}
+            type
+            icon
+            children={[]}
             {...link}
           />
         ))}

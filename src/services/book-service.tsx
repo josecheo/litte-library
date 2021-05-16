@@ -10,7 +10,7 @@ export class BookServices {
         }
         return BookServices.instance;
     }
-    private URL_BASE = 'http://localhost:4000';
+    private URL_BASE = 'https://littelibrary.herokuapp.com';
     private headers: {
         'Content-Type': 'application/json';
     } | undefined;

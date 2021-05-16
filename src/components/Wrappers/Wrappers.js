@@ -1,11 +1,15 @@
 import {
-  withStyles,
   Badge as BadgeBase,
   Typography as TypographyBase,
   Button as ButtonBase,
 } from "@material-ui/core";
+import CloseIcon from '@material-ui/icons/Close';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import IconButton from '@material-ui/core/IconButton';
 import { useTheme, makeStyles } from "@material-ui/styles";
+import MuiDialogActions from '@material-ui/core/DialogActions';
 import classnames from "classnames";
+import { withStyles } from '@material-ui/core/styles';
 var useStyles = makeStyles(theme => ({
   badge: {
     fontWeight: 600,
@@ -13,6 +17,42 @@ var useStyles = makeStyles(theme => ({
     minWidth: 16,
   },
 }));
+
+const styles = (theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+});
+
+
+const DialogTitle = withStyles(styles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+
+const DialogActions = withStyles((theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions);
 
 
 function getColor(color, theme, brigtness = "main") {
@@ -64,7 +104,7 @@ function getFontSize(size, variant = "", theme) {
 }
 
 function createStyled(styles, options) {
-  var Styled = function(props) {
+  var Styled = function (props) {
     const { children, ...other } = props;
     return children(other);
   };
@@ -174,4 +214,4 @@ function Button({ children, color, className, ...props }) {
   );
 }
 
-export { Badge, Typography, Button }
+export { Badge, Typography, Button, DialogTitle,DialogActions }

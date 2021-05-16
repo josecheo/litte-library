@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -24,14 +24,14 @@ import {
 import { useUserDispatch, signOut } from "../../context/UserContext";
 
 
-export default function Header(props) {
+export default function Header(props: { history: any; }) {
   var classes = useStyles();
   // global
   var layoutState = useLayoutState();
   var layoutDispatch = useLayoutDispatch();
   var userDispatch = useUserDispatch();
   // local
-  var [profileMenu, setProfileMenu] = useState(null);
+  var [profileMenu, setProfileMenu] = useState<any>(null);
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
@@ -63,7 +63,14 @@ export default function Header(props) {
             />
           )}
         </IconButton>
-        <Typography variant="h6" weight="medium" className={classes.logotype}>
+        <Typography
+          variant="h6"
+          weight="medium"
+          className={classes.logotype}
+          size
+          colorBrightness
+          color
+        >
           Litte Library
         </Typography>
         <div className={classes.grow} />
@@ -77,7 +84,7 @@ export default function Header(props) {
         >
           <AccountIcon classes={{ root: classes.headerIcon }} />
         </IconButton>
-       
+
         <Menu
           id="profile-menu"
           open={Boolean(profileMenu)}
@@ -88,23 +95,36 @@ export default function Header(props) {
           disableAutoFocusItem
         >
           <div className={classes.profileMenuUser}>
-            <Typography variant="h4" weight="medium">
+            <Typography
+              variant="h4"
+              weight="medium"
+              size
+              colorBrightness
+              color>
               Jose Alvarez
             </Typography>
             <Typography
+              variant
+              weight="small"
+              size
+              colorBrightness
               className={classes.profileMenuLink}
               component="a"
               color="primary"
               href="https://flatlogic.com"
             >
-             joseche0.ja@gmail.com
+              joseche0.ja@gmail.com
             </Typography>
           </div>
-  
+
           <div className={classes.profileMenuUser}>
             <Typography
+              variant="h4"
+              weight="medium"
+              size
+              colorBrightness
+              color
               className={classes.profileMenuLink}
-              color="primary"
               onClick={() => signOut(userDispatch, props.history)}
             >
               Salir
@@ -112,7 +132,7 @@ export default function Header(props) {
           </div>
         </Menu>
       </Toolbar>
-    
+
     </AppBar>
   );
 }
