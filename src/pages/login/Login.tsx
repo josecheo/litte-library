@@ -10,36 +10,43 @@ import { BookServices } from '../../services/book-service'
 import useStyles from "./styles";
 import logo from "./books.svg";
 import { useUserDispatch, loginUser } from "../../context/UserContext";
+import Dialog from '@material-ui/core/Dialog';
 import SignUp from './signUp'
 import SignIn from './signIn'
-function Login(props) {
+
+
+
+
+
+function Login(props: { history: any; }) {
   const classes = useStyles();
   const userDispatch = useUserDispatch();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [activeTabId, setActiveTabId] = useState(0);
+  const [isLoading, setIsLoading] = useState<any>(false);
+  const [error, setError] = useState<any>(null);
+  const [activeTabId, setActiveTabId] = useState<any>(0);
   const bookServices = BookServices.getInstance()
-
-  const [form, setform] = useState({
+  const [isOpen, setIsOpen] = useState<any>(false)
+  const [form, setform] = useState<any>({
     fullname: '',
     email: '',
     password: '',
   })
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target
     setform({ ...form, [name]: value })
   }
 
   const handleSubmit = () => {
-    bookServices.auth(form).subscribe((data) => {
+    setIsLoading(true)
+    bookServices.auth(form).subscribe((data:any) => {
+      setIsLoading(false)
       if (data.data.codigo === "0") {
         setError(true)
       } else {
         loginUser(
           userDispatch,
-          data.data.email,
-          data.data.password,
+          data.data[0],
           props.history,
           setIsLoading,
           setError,
@@ -51,8 +58,15 @@ function Login(props) {
   }
 
   const handleCreateUser = () => {
-    bookServices.createUser(form).subscribe((data) => {
+    setIsLoading(true)
+    bookServices.createUser(form).subscribe(() => {
+      setIsLoading(false)
+      setIsOpen(true)
       setActiveTabId(0)
+      setTimeout(() => {
+        setIsOpen(false)
+      }, 1000);
+
     },
       (error) => console.log(error)
     );
@@ -104,6 +118,14 @@ function Login(props) {
           © 2021-{new Date().getFullYear()} <a style={{ textDecoration: 'none', color: 'inherit' }} href="https://www.linkedin.com/in/jose-alvarez-41380a199/" rel="noopener noreferrer" target="_blank">JoseCheo</a>, FrontEnd Develop
         </Typography>
       </div>
+
+      {isOpen && (
+        <Dialog aria-labelledby="customized-dialog-title" open={isOpen}>
+          <div style={{ width: '300px', height: '100px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            Bienvenido !!
+          </div>
+        </Dialog>
+      )}
     </Grid>
 
   );

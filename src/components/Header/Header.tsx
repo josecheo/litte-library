@@ -25,13 +25,16 @@ import { useUserDispatch, signOut } from "../../context/UserContext";
 
 
 export default function Header(props: { history: any; }) {
-  var classes = useStyles();
+  const classes = useStyles();
   // global
-  var layoutState = useLayoutState();
-  var layoutDispatch = useLayoutDispatch();
-  var userDispatch = useUserDispatch();
+  const layoutState = useLayoutState();
+  const layoutDispatch = useLayoutDispatch();
+  const userDispatch = useUserDispatch();
+  const user: any = JSON.parse(localStorage.getItem('user') || '')
   // local
-  var [profileMenu, setProfileMenu] = useState<any>(null);
+  const [profileMenu, setProfileMenu] = useState<any>(null);
+
+
   return (
     <AppBar position="fixed" className={classes.appBar}>
       <Toolbar className={classes.toolbar}>
@@ -101,7 +104,7 @@ export default function Header(props: { history: any; }) {
               size
               colorBrightness
               color>
-              Jose Alvarez
+             {user.fullname}
             </Typography>
             <Typography
               variant
@@ -113,7 +116,7 @@ export default function Header(props: { history: any; }) {
               color="primary"
               href="https://flatlogic.com"
             >
-              joseche0.ja@gmail.com
+             {user.email}
             </Typography>
           </div>
 

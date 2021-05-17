@@ -17,7 +17,7 @@ function userReducer(state, action) {
 
 function UserProvider({ children }) {
   var [state, dispatch] = React.useReducer(userReducer, {
-    isAuthenticated: !!localStorage.getItem("id_token"),
+    isAuthenticated: !!localStorage.getItem("user"),
   });
 
   return (
@@ -49,19 +49,19 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+function loginUser(dispatch, user, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
- 
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
-      history.push('/app/dashboard')
+
+  localStorage.setItem('user', JSON.stringify(user))
+  setError(null)
+  setIsLoading(false)
+  dispatch({ type: 'LOGIN_SUCCESS' })
+  history.push('/app/dashboard')
 }
 
 function signOut(dispatch, history) {
-  localStorage.removeItem("id_token");
+  localStorage.removeItem("user");
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }

@@ -10,7 +10,7 @@ import classnames from "classnames";
 import google from "../../images/google.svg";
 
 
-function SignUp({ form, classes, handleInputChange, handleCreateUser, error, isLoading }) {
+function SignUp({ form, classes, handleInputChange, handleCreateUser, error, isLoading }:any) {
   return (
     <>
       <Typography variant="h2" className={classes.subGreeting}>

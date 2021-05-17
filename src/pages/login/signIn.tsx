@@ -9,7 +9,7 @@ import { withRouter } from "react-router-dom";
 import google from "../../images/google.svg";
 
 
-function signIn({ form, classes, handleInputChange, handleSubmit, error, isLoading }) {
+function signIn({ form, classes, handleInputChange, handleSubmit, error, isLoading }:any) {
   return (
     <>
       <Button size="large" className={classes.googleButton}>

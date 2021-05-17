@@ -35,7 +35,7 @@ export class BookServices {
     }
 
     public auth(data: object): Observable<AxiosResponse<[]>> {
-        const uri = `http://localhost:4000/auth`;
+        const uri = `${this.URL_BASE}/auth`;
         return Axios.request<[]>({
             method: 'post',
             url: uri,
@@ -45,7 +45,7 @@ export class BookServices {
     }
 
     public createUser(data: object): Observable<AxiosResponse<[]>> {
-        const uri = `http://localhost:4000/signup`;
+        const uri = `${this.URL_BASE}/signup`;
         return Axios.request<[]>({
             method: 'post',
             url: uri,
