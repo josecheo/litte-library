@@ -6,8 +6,7 @@ import {
   Fade,
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
-import google from "../../images/google.svg";
+
 
 
 function SignUp({ form, classes, handleInputChange, handleCreateUser, error, isLoading }:any) {
