@@ -1,40 +1,62 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Grid,
-  CircularProgress,
   Typography,
-  Button,
   Tabs,
   Tab,
-  TextField,
-  Fade,
 } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
-
-// styles
+import { BookServices } from '../../services/book-service'
 import useStyles from "./styles";
-
-// logo
 import logo from "./books.svg";
-import google from "../../images/google.svg";
-
-// context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
-
+import SignUp from './signUp'
+import SignIn from './signIn'
 function Login(props) {
-  var classes = useStyles();
+  const classes = useStyles();
+  const userDispatch = useUserDispatch();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [activeTabId, setActiveTabId] = useState(0);
+  const bookServices = BookServices.getInstance()
 
-  // global
-  var userDispatch = useUserDispatch();
+  const [form, setform] = useState({
+    fullname: '',
+    email: '',
+    password: '',
+  })
 
-  // local
-  var [isLoading, setIsLoading] = useState(false);
-  var [error, setError] = useState(null);
-  var [activeTabId, setActiveTabId] = useState(0);
-  var [nameValue, setNameValue] = useState("");
-  var [loginValue, setLoginValue] = useState("");
-  var [passwordValue, setPasswordValue] = useState("");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setform({ ...form, [name]: value })
+  }
+
+  const handleSubmit = () => {
+    bookServices.auth(form).subscribe((data) => {
+      if (data.data.codigo === "0") {
+        setError(true)
+      } else {
+        loginUser(
+          userDispatch,
+          data.data.email,
+          data.data.password,
+          props.history,
+          setIsLoading,
+          setError,
+        )
+      }
+    },
+      (error) => console.log(error)
+    );
+  }
+
+  const handleCreateUser = () => {
+    bookServices.createUser(form).subscribe((data) => {
+      setActiveTabId(0)
+    },
+      (error) => console.log(error)
+    );
+  }
 
   return (
     <Grid container className={classes.container}>
@@ -55,187 +77,27 @@ function Login(props) {
             <Tab label="Registrar" classes={{ root: classes.tab }} />
           </Tabs>
           {activeTabId === 0 && (
-            <React.Fragment>
-              <Button size="large" className={classes.googleButton}>
-                <img src={google} alt="google" className={classes.googleIcon} />
-                &nbsp;acceder con Google
-              </Button>
-              <div className={classes.formDividerContainer}>
-                <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>o</Typography>
-                <div className={classes.formDivider} />
-              </div>
-              <Fade in={error}>
-                <Typography color="secondary" className={classes.errorMessage}>
-                  Algo está mal con su nombre de usuario o contraseña :(
-                </Typography>
-              </Fade>
-              <TextField
-                id="email"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
-                margin="normal"
-                placeholder="Correo electrónico"
-                type="email"
-                fullWidth
-              />
-              <TextField
-                id="password"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
-                margin="normal"
-                placeholder="Contraseña"
-                type="password"
-                fullWidth
-              />
-              <div className={classes.formButtons}>
-                {isLoading ? (
-                  <CircularProgress size={26} className={classes.loginLoader} />
-                ) : (
-                  <Button
-                    disabled={
-                      loginValue.length === 0 || passwordValue.length === 0
-                    }
-                    onClick={() =>
-                      loginUser(
-                        userDispatch,
-                        loginValue,
-                        passwordValue,
-                        props.history,
-                        setIsLoading,
-                        setError,
-                      )
-                    }
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                  >
-                    Entrar
-                  </Button>
-                )}
-                <Button
-                  color="primary"
-                  size="large"
-                  className={classes.forgetButton}
-                >
-                  ¿Olvido su contraseña?
-                </Button>
-              </div>
-            </React.Fragment>
+            <>
+              <SignIn
+                error={error}
+                isLoading={isLoading}
+                form={form}
+                classes={classes}
+                handleInputChange={handleInputChange}
+                handleSubmit={handleSubmit}
+              ></SignIn>
+            </>
           )}
           {activeTabId === 1 && (
-            <React.Fragment>
-              <Typography variant="h2" className={classes.subGreeting}>
-                Crear tu cuenta
-              </Typography>
-              <Fade in={error}>
-                <Typography color="secondary" className={classes.errorMessage}>
-                  algo esta mal :(
-                </Typography>
-              </Fade>
-              <TextField
-                id="name"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={nameValue}
-                onChange={e => setNameValue(e.target.value)}
-                margin="normal"
-                placeholder="Nombre Completo"
-                type="text"
-                fullWidth
-              />
-              <TextField
-                id="email"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={loginValue}
-                onChange={e => setLoginValue(e.target.value)}
-                margin="normal"
-                placeholder="Correo Electronico"
-                type="email"
-                fullWidth
-              />
-              <TextField
-                id="password"
-                InputProps={{
-                  classes: {
-                    underline: classes.textFieldUnderline,
-                    input: classes.textField,
-                  },
-                }}
-                value={passwordValue}
-                onChange={e => setPasswordValue(e.target.value)}
-                margin="normal"
-                placeholder="Contraseña"
-                type="password"
-                fullWidth
-              />
-              <div className={classes.creatingButtonContainer}>
-                {isLoading ? (
-                  <CircularProgress size={26} />
-                ) : (
-                  <Button
-                    onClick={() =>
-                      loginUser(
-                        userDispatch,
-                        loginValue,
-                        passwordValue,
-                        props.history,
-                        setIsLoading,
-                        setError,
-                      )
-                    }
-                    disabled={
-                      loginValue.length === 0 ||
-                      passwordValue.length === 0 ||
-                      nameValue.length === 0
-                    }
-                    size="large"
-                    variant="contained"
-                    color="primary"
-                    fullWidth
-                    className={classes.createAccountButton}
-                  >
-                    Crear tu cuenta
-                  </Button>
-                )}
-              </div>
-              <div className={classes.formDividerContainer}>
-                <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>or</Typography>
-                <div className={classes.formDivider} />
-              </div>
-              <Button
-                size="large"
-                className={classnames(
-                  classes.googleButton,
-                  classes.googleButtonCreating,
-                )}
-              >
-                <img src={google} alt="google" className={classes.googleIcon} />
-                &nbsp;Registrarte con google
-              </Button>
-            </React.Fragment>
+            <SignUp
+              error={error}
+              isLoading={isLoading}
+              form={form}
+              classes={classes}
+              handleInputChange={handleInputChange}
+              handleCreateUser={handleCreateUser}
+            >
+            </SignUp>
           )}
         </div>
         <Typography color="primary" className={classes.copyright}>
@@ -243,6 +105,7 @@ function Login(props) {
         </Typography>
       </div>
     </Grid>
+
   );
 }
 

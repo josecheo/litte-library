@@ -34,4 +34,24 @@ export class BookServices {
         }) || null
     }
 
+    public auth(data: object): Observable<AxiosResponse<[]>> {
+        const uri = `http://localhost:4000/auth`;
+        return Axios.request<[]>({
+            method: 'post',
+            url: uri,
+            data: data,
+            headers: this.headers,
+        }) || null
+    }
+
+    public createUser(data: object): Observable<AxiosResponse<[]>> {
+        const uri = `http://localhost:4000/signup`;
+        return Axios.request<[]>({
+            method: 'post',
+            url: uri,
+            data: data,
+            headers: this.headers,
+        }) || null
+    }
+
 }
