@@ -13,7 +13,7 @@ import { useUserState } from "../context/UserContext";
 
 export default function App() {
   // global
-  var { isAuthenticated } = useUserState();
+  var { isAuthenticated }:any = useUserState();
 
   return (
     <HashRouter>

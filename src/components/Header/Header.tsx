@@ -27,9 +27,9 @@ import { useUserDispatch, signOut } from "../../context/UserContext";
 export default function Header(props: { history: any; }) {
   const classes = useStyles();
   // global
-  const layoutState = useLayoutState();
-  const layoutDispatch = useLayoutDispatch();
-  const userDispatch = useUserDispatch();
+  const layoutState:any = useLayoutState();
+  const layoutDispatch:any = useLayoutDispatch();
+  const userDispatch:any = useUserDispatch();
   const user: any = JSON.parse(localStorage.getItem('user') || '')
   // local
   const [profileMenu, setProfileMenu] = useState<any>(null);

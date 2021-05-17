@@ -12,15 +12,7 @@ import google from "../../images/google.svg";
 function signIn({ form, classes, handleInputChange, handleSubmit, error, isLoading }:any) {
   return (
     <>
-      <Button size="large" className={classes.googleButton}>
-        <img src={google} alt="google" className={classes.googleIcon} />
-      &nbsp;acceder con Google
-    </Button>
-      <div className={classes.formDividerContainer}>
-        <div className={classes.formDivider} />
-        <Typography className={classes.formDividerWord}>o</Typography>
-        <div className={classes.formDivider} />
-      </div>
+     
       <Fade in={error}>
         <Typography color="secondary" className={classes.errorMessage}>
           Algo está mal con su nombre de usuario o contraseña :(

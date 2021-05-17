@@ -1,9 +1,9 @@
 import React from "react";
 
-var UserStateContext = React.createContext();
-var UserDispatchContext = React.createContext();
+var UserStateContext = React.createContext(null);
+var UserDispatchContext = React.createContext(null);
 
-function userReducer(state, action) {
+function userReducer(state: any, action: { type: any; }) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       return { ...state, isAuthenticated: true };
@@ -15,14 +15,14 @@ function userReducer(state, action) {
   }
 }
 
-function UserProvider({ children }) {
-  var [state, dispatch] = React.useReducer(userReducer, {
+function UserProvider({ children }:any) {
+  var [state, dispatch]:any = React.useReducer(userReducer, {
     isAuthenticated: !!localStorage.getItem("user"),
   });
 
   return (
     <UserStateContext.Provider value={state}>
-      <UserDispatchContext.Provider value={dispatch}>
+      <UserDispatchContext.Provider value={dispatch || null}>
         {children}
       </UserDispatchContext.Provider>
     </UserStateContext.Provider>
@@ -49,7 +49,7 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-function loginUser(dispatch, user, history, setIsLoading, setError) {
+function loginUser(dispatch: { (defaultValue: any): void; (arg0: { type: string; }): void; }, user: any, history: string[], setIsLoading: { (value: any): void; (arg0: boolean): void; }, setError: { (value: any): void; (arg0: boolean | null): void; }) {
   setError(false);
   setIsLoading(true);
 
@@ -60,8 +60,12 @@ function loginUser(dispatch, user, history, setIsLoading, setError) {
   history.push('/app/dashboard')
 }
 
-function signOut(dispatch, history) {
+function signOut(dispatch: { (defaultValue: any): void; (arg0: { type: string; }): void; }, history: string[]) {
   localStorage.removeItem("user");
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
+// function defaultValue(defaultValue: any) {
+//   throw new Error("Function not implemented.");
+// }
+

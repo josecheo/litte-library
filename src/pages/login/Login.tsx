@@ -20,7 +20,7 @@ import SignIn from './signIn'
 
 function Login(props: { history: any; }) {
   const classes = useStyles();
-  const userDispatch = useUserDispatch();
+  const userDispatch :any= useUserDispatch();
   const [isLoading, setIsLoading] = useState<any>(false);
   const [error, setError] = useState<any>(null);
   const [activeTabId, setActiveTabId] = useState<any>(0);

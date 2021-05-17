@@ -92,21 +92,8 @@ function SignUp({ form, classes, handleInputChange, handleCreateUser, error, isL
           </Button>
         )}
       </div>
-      <div className={classes.formDividerContainer}>
-        <div className={classes.formDivider} />
-        <Typography className={classes.formDividerWord}>or</Typography>
-        <div className={classes.formDivider} />
-      </div>
-      <Button
-        size="large"
-        className={classnames(
-          classes.googleButton,
-          classes.googleButtonCreating,
-        )}
-      >
-        <img src={google} alt="google" className={classes.googleIcon} />
-                &nbsp;Registrarte con google
-              </Button>
+ 
+    
     </>
 
 
